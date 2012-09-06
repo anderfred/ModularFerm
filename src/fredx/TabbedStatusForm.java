@@ -21,8 +21,9 @@ import java.util.Locale;
  */
 public class TabbedStatusForm extends JFrame {
     static int i = 0;
-    JPanel panelLight = new JPanel();
+    LightPanel panelLight = new LightPanel();
     JPanel panelRain = new JPanel();
+    AeroponicPanel aeroponicPanel = new AeroponicPanel();
     JLabel l1 = new JLabel("Intestivity");
     JPanel main = new JPanel();
     JLabel l2 = new JLabel("Start time:");
@@ -45,7 +46,7 @@ public class TabbedStatusForm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Font font = new Font("Verdana", Font.PLAIN, 10);
         final JTabbedPane tabbedPane = new JTabbedPane();
-        panelLight.setLayout(new GridLayout(0,4));
+       /*panelLight.setLayout(new GridLayout(0,4));
         panelLight.add(l1);
         panelLight.add(slider3);
         slider3.setBorder(BorderFactory.createTitledBorder(""));
@@ -73,10 +74,10 @@ public class TabbedStatusForm extends JFrame {
                 lc3.setText(String.valueOf(slider3.getValue()) + "%");
             }
         });
-        panelLight.setPreferredSize(new Dimension(570, 260));
+        panelLight.setPreferredSize(new Dimension(570, 260));*/
         tabbedPane.setFont(font);
         tabbedPane.addTab("Ligth Control", panelLight);
-        tabbedPane.addTab("Rain Control",panelRain);
+        tabbedPane.addTab("Aeroponic Control",aeroponicPanel);
         main.add(tabbedPane);
         lcc.addActionListener(new TestActionListener());
         //main.setLayout(new GridLayout(4,4)); //GrigLayout(x,y) x-столбцы y ряды
@@ -90,22 +91,7 @@ public class TabbedStatusForm extends JFrame {
 
     public class TestActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            SimpleDateFormat sm = new SimpleDateFormat("HH:mm:ss", Locale.US);
-            //Код, который нужно выполнить при нажатии
-            //for(JButton b:buttons){if (e.getSource()==b){ddddLabel.setText(b.getText()); break;}}
-            try {
-                lc1.setText(sm.format(sm.parse(lStart.getText())));
-                Ferm.LIGHT_START= sm.parse(lStart.getText());
-                System.out.println(sm.parse(lStart.getText()));
-            } catch (ParseException e1) {
-                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            try {
-                lc2.setText(sm.format(sm.parse(lEnd.getText())));
-                Ferm.LIGHT_END=sm.parse(lEnd.getText());
-            } catch (ParseException e1) {
-                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
+
             //Ferm.LIGHT_CYCLE=1000*Integer.parseInt(lightNew.getText());
             //Ferm.RAIN_CYCLE=1000*Integer.parseInt(rainNew.getText());
             //statLight=new JLabel(""+Ferm.LIGHT_CYCLE/1000+" sec");
