@@ -18,17 +18,7 @@ import static java.lang.Thread.sleep;
  */
 public class Init {
     public static void main(String[] args) throws InterruptedException, ParseException {
-        /*Ferm ferm1 = new Ferm("MyNewFerm");
-        StatusForm f =new StatusForm();
-        while (true){
-        f.lightSt.setText(ferm1.Light());
-        f.rainSt.setText(ferm1.Rain());
-        f.statLight.setText(""+Ferm.LIGHT_CYCLE/1000+" sec");
-        f.statRain.setText(""+Ferm.RAIN_CYCLE/1000+" sec");
-        f.date1.setText(""+new Date());
 
-        sleep(1000);
-        } */
         Ferm ferm1 = new Ferm("MyNewFerm");
         TabbedStatusForm tF= new TabbedStatusForm();
         SimpleDateFormat sm = new SimpleDateFormat("HH:mm:ss" , Locale.US);

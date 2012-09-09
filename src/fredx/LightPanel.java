@@ -19,8 +19,11 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class LightPanel extends JPanel {
-
-
+    JPanel p1 = new JPanel();
+    JPanel p2 = new JPanel();
+    JPanel p3 = new JPanel();
+    JPanel p4 = new JPanel();
+    FlowLayout f = new FlowLayout(FlowLayout.LEFT);
     JLabel l1 = new JLabel("Intestivity");
     JLabel l2 = new JLabel("Start time:");
     JLabel l3 = new JLabel("End time:");
@@ -32,38 +35,48 @@ public class LightPanel extends JPanel {
     JLabel lc5 = new JLabel("");
     JLabel lc6 = new JLabel("");
     JButton lcc = new JButton("Apply");
-    JTextField lStartHh = new JTextField();
-    JTextField lStartMm = new JTextField();
-    JTextField lEndHh = new JTextField();
-    JTextField lEndMm  = new JTextField();
+    JTextField lStartHh = new JTextField(8);
+    JTextField lStartMm = new JTextField(8);
+    JTextField lEndHh = new JTextField(8);
+    JTextField lEndMm  = new JTextField(8);
     JSlider slider3 = new JSlider();
     public LightPanel(){
-        this.setLayout(new GridLayout(0, 5));
-        this.add(l1);
-        this.add(slider3);
+        this.setLayout(new GridLayout(0, 1));
+        p1.setLayout(f);
+        p1.add(l1);
+        p1.add(slider3);
+        p1.add(lc3);
         slider3.setBorder(BorderFactory.createTitledBorder(""));
         slider3.setMajorTickSpacing(20);
         slider3.setMinorTickSpacing(5);
         slider3.setPaintTicks(true);
         slider3.setPaintLabels(false);
-        this.add(lc3);
-        this.add(new JLabel(""));
-        this.add(new JLabel("State:"));
-        this.add(l2);
-        this.add(lStartHh);       //text field start light
-        this.add(lStartMm);
-        this.add(lc1);
-        this.add(lc6); //ok
-        this.add(l3);
-        this.add(lEndHh);           //text field end light
-        this.add(lEndMm);
-        this.add(lc2);
-        this.add(lc4); //ok
-        this.add(l4);
-        this.add(lc5);
-        this.add(new JLabel(""));
-        lcc.addActionListener(new TestActionListener());
+        this.add(p1);
+        p2.setLayout(f);
+
+        p2.add(l2);
+        p2.add(lStartHh);
+        p2.add(lStartMm);
+        p2.add(lc1);
+
+        this.add(p2);
+        p3.setLayout(f);
+        p3.add(lc6);
+        p3.add(l3);
+        p3.add(lEndHh);
+        p3.add(lEndMm);
+        p3.add(lc2);
+
+        p4.setLayout(f);
+        p4.add(lc4);
+        p4.add(l4);
+        p4.add(lc5);
+        p4.add(new JLabel(""));
+        this.add(p4);
         this.add(lcc);
+
+        lcc.addActionListener(new TestActionListener());
+
         slider3.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

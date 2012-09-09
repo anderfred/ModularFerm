@@ -16,28 +16,35 @@ import java.util.Locale;
  * To change this template use File | Settings | File Templates.
  */
 public class AeroponicPanel extends JPanel {
-    JLabel cycleLabel = new JLabel("Cycle time:");
-    JLabel cycleLength = new JLabel("Length:");
-    JLabel cycleStatusLabel = new JLabel("None");
-    JLabel cycleLengthLabel = new JLabel("None");
-    JTextField cycleNew = new JTextField();
-    JTextField cycleNewLenght = new JTextField();
+    JLabel cycleLabel = new JLabel("Cycle time:  mm");
+    JLabel cycleLength = new JLabel("Length: ss");
+    JLabel cycleStatusLabel = new JLabel("");
+    JLabel cycleLengthLabel = new JLabel("");
+    JTextField cycleNew = new JTextField(8);
+    JTextField cycleNewLenght = new JTextField(8);
     JButton button = new JButton("Apply");
-    public AeroponicPanel(){setLayout(new GridLayout(0,3));
-    this.add(cycleLabel);
-    this.add(cycleStatusLabel);
-    this.add(cycleNew);
-    this.add(cycleLength);
-    this.add(cycleLengthLabel);
-    this.add(cycleNewLenght);
+    FlowLayout f = new FlowLayout(FlowLayout.LEFT);
+    JPanel p1 = new JPanel();
+    JPanel p2 = new JPanel();
+    public AeroponicPanel(){
+    setLayout(new GridLayout(0,1));
+    f.setHgap(9);
+    p1.setLayout(f);
+    p1.add(cycleLabel);
+    p1.add(cycleStatusLabel);
+    p1.add(cycleNew);
+    this.add(p1);
+    p2.setLayout(f);
+    p2.add(cycleLength);
+    p2.add(cycleLengthLabel);
+    p2.add(cycleNewLenght);
+    this.add(p2);
     this.add(button);
     button.addActionListener(new TestActionListener1());
     this.setPreferredSize(new Dimension(570, 260));
     }
     public class TestActionListener1 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //Код, который нужно выполнить при нажатии
-            //for(JButton b:buttons){if (e.getSource()==b){ddddLabel.setText(b.getText()); break;}}
             cycleStatusLabel.setText(cycleNew.getText());
             cycleLengthLabel.setText(cycleNewLenght.getText());
 }}
