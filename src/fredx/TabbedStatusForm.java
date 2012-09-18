@@ -25,6 +25,7 @@ public class TabbedStatusForm extends JFrame {
     JPanel panelRain = new JPanel();
     TemperaturePanel tempPanel = new TemperaturePanel();
     AeroponicPanel aeroponicPanel = new AeroponicPanel();
+    StatusPanel statusPanel = new StatusPanel();
     LogPanel log = new LogPanel();
     JLabel l1 = new JLabel("Intestivity");
     JPanel main = new JPanel();
@@ -53,6 +54,7 @@ public class TabbedStatusForm extends JFrame {
         tabbedPane.addTab("Ligth Control", panelLight);
         tabbedPane.addTab("Aeroponic Control",aeroponicPanel);
         tabbedPane.addTab("Temperature control",tempPanel);
+        tabbedPane.addTab("Status",statusPanel);
         tabbedPane.addTab("Log",log);
         main.add(tabbedPane);
         lcc.addActionListener(new TestActionListener());

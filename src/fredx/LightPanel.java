@@ -19,10 +19,13 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class LightPanel extends JPanel {
+    public static Calendar cal1;
+    public static Calendar cal2;
     JPanel p1 = new JPanel();
     JPanel p2 = new JPanel();
     JPanel p3 = new JPanel();
     JPanel p4 = new JPanel();
+    JPanel p5 = new JPanel();
     FlowLayout f = new FlowLayout(FlowLayout.LEFT);
     JLabel l1 = new JLabel("Intestivity");
     JLabel l2 = new JLabel("Start time:");
@@ -32,7 +35,6 @@ public class LightPanel extends JPanel {
     JLabel lc2 = new JLabel("None");
     JLabel lc3 = new JLabel("50%");
     JLabel lc4 = new JLabel("");
-    JLabel lc5 = new JLabel("");
     JLabel lc6 = new JLabel("");
     JButton lcc = new JButton("Apply");
     JTextField lStartHh = new JTextField(8);
@@ -40,6 +42,9 @@ public class LightPanel extends JPanel {
     JTextField lEndHh = new JTextField(8);
     JTextField lEndMm  = new JTextField(8);
     JSlider slider3 = new JSlider();
+    JButton cancel = new JButton("Cancel");
+    java.util.Timer timer = new java.util.Timer();
+
     public LightPanel(){
         this.setLayout(new GridLayout(0, 1));
         p1.setLayout(f);
@@ -66,16 +71,20 @@ public class LightPanel extends JPanel {
         p3.add(lEndHh);
         p3.add(lEndMm);
         p3.add(lc2);
-
+        this.add(p3) ;
         p4.setLayout(f);
         p4.add(lc4);
         p4.add(l4);
-        p4.add(lc5);
+        p4.add(Init.TIME);
         p4.add(new JLabel(""));
         this.add(p4);
-        this.add(lcc);
+        p5.setLayout(f);
+        p5.add(lcc);
+        p5.add(cancel);
+        this.add(p5);
 
         lcc.addActionListener(new TestActionListener());
+        cancel.addActionListener(new TestActionListener1());
 
         slider3.addChangeListener(new ChangeListener() {
             @Override
@@ -88,30 +97,43 @@ public class LightPanel extends JPanel {
     }
     public class TestActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            timer = new java.util.Timer();
             SimpleDateFormat sm = new SimpleDateFormat("HH:mm:ss", Locale.US);
             lc1.setText(lStartHh.getText()+":"+lStartMm.getText());
             lc2.setText(lEndHh.getText()+":"+lEndMm.getText());
-            Calendar cal1 = Calendar.getInstance();
-            Calendar cal2 = Calendar.getInstance();
+            cal1 = Calendar.getInstance();
+            cal2 = Calendar.getInstance();
             cal1.set(Calendar.HOUR_OF_DAY,Integer.parseInt(lStartHh.getText()));
             cal1.set(Calendar.MINUTE, Integer.parseInt(lStartMm.getText()));
             cal2.set(Calendar.HOUR_OF_DAY,Integer.parseInt(lEndHh.getText()));
             cal2.set(Calendar.MINUTE,Integer.parseInt(lEndMm.getText()));
-            java.util.Timer timer = new java.util.Timer();
+            //java.util.Timer timer = new java.util.Timer();
             TimerTask task1 = new TimerTask() {
                 @Override
                 public void run() {
-                    System.out.println("Light on");
+                    System.out.println("Light on\n");
+                    Init.lOG.append(new Date() + "  Light on\n");
+                    Init.IS_LIGHT=true;
                 }
             }      ;
             TimerTask task2 = new TimerTask() {
                 @Override
                 public void run() {
-                    System.out.println("Light off");
+                    System.out.println("Light off\n");
+                    Init.lOG.append(new Date() + "  Light off\n");
+                    Init.IS_LIGHT=false;
                 }
             }   ;
             timer.schedule(task1, cal1.getTime(),86400*1000);
             timer.schedule(task2, cal2.getTime(),86400*1000);
 
 
-}}}
+}}
+ public class TestActionListener1 implements ActionListener{
+     public void actionPerformed(ActionEvent e) {
+       timer.cancel();
+       lc1.setText("Cancelled");
+       lc2.setText("Cancelled");
+       Init.lOG.append(new Date()+" Light Timer stopped");
+     }}
+}

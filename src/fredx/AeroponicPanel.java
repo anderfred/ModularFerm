@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimerTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,12 +22,15 @@ public class AeroponicPanel extends JPanel {
     JLabel cycleLength = new JLabel("Length: ss");
     JLabel cycleStatusLabel = new JLabel("");
     JLabel cycleLengthLabel = new JLabel("");
-    JTextField cycleNew = new JTextField(8);
-    JTextField cycleNewLenght = new JTextField(8);
+    public static JTextField cycleNew = new JTextField(8);
+    public static JTextField cycleNewLenght = new JTextField(8);
     JButton button = new JButton("Apply");
+    JButton button1 = new JButton("Cancel");
     FlowLayout f = new FlowLayout(FlowLayout.LEFT);
     JPanel p1 = new JPanel();
     JPanel p2 = new JPanel();
+    JPanel p3 = new JPanel();
+    java.util.Timer timer = new java.util.Timer();
     public AeroponicPanel(){
     setLayout(new GridLayout(0,1));
     f.setHgap(9);
@@ -39,13 +44,39 @@ public class AeroponicPanel extends JPanel {
     p2.add(cycleLengthLabel);
     p2.add(cycleNewLenght);
     this.add(p2);
-    this.add(button);
+    p3.setLayout(f);
+    p3.add(button);
+    p3.add(button1);
+    this.add(p3);
     button.addActionListener(new TestActionListener1());
-    this.setPreferredSize(new Dimension(570, 260));
+    button1.addActionListener(new TestActionListener2());
+    this.setPreferredSize(new Dimension(520, 160));
     }
     public class TestActionListener1 implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             cycleStatusLabel.setText(cycleNew.getText());
             cycleLengthLabel.setText(cycleNewLenght.getText());
+            StatusPanel.l22.setText(cycleNew.getText());
+            StatusPanel.l23.setText(cycleLength.getText());
+            timer = new java.util.Timer();
+            TimerTask task1 = new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("Aeroponic system on");
+                    Init.lOG.append(new Date()+" Aeroponic system on\n");
+                    Init.NEXT_Aeroponic=new Date();
+                    //aeroponic on(length);
+                }
+            }       ;
+            timer.schedule(task1,new Date(),Integer.parseInt(cycleNew.getText())*60000);
+
 }}
+    public class TestActionListener2 implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            timer.cancel();
+            cycleNew.setText("Cancelled");
+            cycleNewLenght.setText("Cancelled");
+            Init.lOG.append(new Date()+" Aeroponic system stopped\n");
+
+        }}
 }

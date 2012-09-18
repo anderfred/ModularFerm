@@ -1,6 +1,7 @@
 package fredx;
 import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
 
+import javax.swing.*;
 import java.text.ParseException;
 import java.util.*;
 import java.text.SimpleDateFormat;
@@ -17,29 +18,23 @@ import static java.lang.Thread.sleep;
  * To change this template use File | Settings | File Templates.
  */
 public class Init {
+    public static JTextArea lOG = new JTextArea(20,20);
+    public static JLabel TIME = new JLabel("");
+    public static boolean IS_LIGHT;
+    public static Date NEXT_Aeroponic;
     public static void main(String[] args) throws InterruptedException, ParseException {
 
         Ferm ferm1 = new Ferm("MyNewFerm");
         TabbedStatusForm tF= new TabbedStatusForm();
-        SimpleDateFormat sm = new SimpleDateFormat("HH:mm:ss" , Locale.US);
-
-        /*
-        while (true){
-            //tF.lightSt.setText(ferm1.Light());
-           // tF.rainSt.setText(ferm1.Rain());
-           // tF.statLight.setText(""+Ferm.LIGHT_CYCLE/1000+" sec");
-            //tF.statRain.setText(""+Ferm.RAIN_CYCLE/1000+" sec");
-            tF.panelLight.lc5.setText(""+sm.format(new Date()));
-           if(ferm1.Light()){tF.panelLight.lc6.setText("On");tF.panelLight.lc4.setText("");}else {tF.panelLight.lc6.setText("");tF.panelLight.lc4.setText("Off");}
-           sleep(1000);
-        }
-
-        //Date d = new Date();
-        //SimpleDateFormat sm = new SimpleDateFormat("HH:mm:ss");
-        //System.out.println(d.getTime());
-
-        //sm.format(sm.parse(new String("14:50:12")));
-        //System.out.print(sm.parse(new String("14:50:12")));                */
+        final SimpleDateFormat sm = new SimpleDateFormat("HH:mm:ss" , Locale.US);
+        java.util.Timer timer = new java.util.Timer();
+        TimerTask t = new TimerTask() {
+            @Override
+            public void run() {
+                TIME.setText(sm.format(new Date()));
+            }
+        }       ;
+        timer.schedule(t,new Date(),1000);
     }
 
 
